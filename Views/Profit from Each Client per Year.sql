@@ -1,7 +1,7 @@
 USE DiskShop;
 
 GO
-CREATE VIEW StatisticsPerYear
+CREATE VIEW ProfitFromEachClientPerYear
 AS
 	SELECT
 		YEAR(OperationLog.OperationDateTimeStart) AS Year,
@@ -10,25 +10,25 @@ AS
 			SELECT
 				OperationPrice
 			FROM OperationLog
-			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'Купівля'
+			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'пїЅпїЅпїЅпїЅпїЅпїЅ'
 		) AS FilmPurchace,
 		(
 			SELECT
 				OperationPrice
 			FROM OperationLog
-			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'Оренда'
+			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'пїЅпїЅпїЅпїЅпїЅпїЅ'
 		) AS FilmRent,
 		(
 			SELECT
 				OperationPrice
 			FROM OperationLog
-			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'Купівля'
+			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'пїЅпїЅпїЅпїЅпїЅпїЅ'
 		) AS MusicPurchace,
 		(
 			SELECT
 				OperationPrice
 			FROM OperationLog
-			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'Оренда'
+			WHERE OperationLog.idClient = Costumer.ID AND OperationLog.OperationType = 'пїЅпїЅпїЅпїЅпїЅпїЅ'
 		) AS MusicRent
 	FROM OperationLog
 		 INNER JOIN Client AS Costumer
