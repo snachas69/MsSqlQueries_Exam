@@ -1,0 +1,102 @@
+CREATE DATABASE DiskShop;
+GO
+USE DiskShop;
+GO
+CREATE TABLE Client 
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	FirstName VARCHAR(20) NOT NULL,
+	LastName VARCHAR(20) NOT NULL,
+	Adress VARCHAR(20),
+	City VARCHAR(10),
+	BirthDay DATE,
+	MarrigeStatus INT NOT NULL,
+	Sex INT NOT NULL,
+	Child INT NOT NULL
+);
+GO
+CREATE TABLE PhoneList
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Phone VARCHAR(10),
+	idClient INT,
+	CONSTRAINT FK_idClientPhoneList FOREIGN KEY (idClient)
+	REFERENCES Client(ID)
+);
+CREATE TABLE MailList
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Mail VARCHAR(50),
+	idClient INT,
+	CONSTRAINT FK_idClientMailList FOREIGN KEY (idClient)
+	REFERENCES Client(ID)
+);
+CREATE TABLE PersonalDiscount
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	StartDateTime DATETIME NOT NULL,
+	EndDateTime DATETIME,
+	PersonalDiscountValue INT NOT NULL,
+	idClient INT,
+	CONSTRAINT FK_idClientPersonalDiscount FOREIGN KEY (idClient)
+	REFERENCES Client(ID)
+);
+
+GO
+CREATE TABLE Disc
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Name VARCHAR(30),
+	Price DECIMAL(9,2) NOT NULL
+);
+CREATE TABLE Film
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Name VARCHAR(30),
+	Genre VARCHAR(20),
+	MainRole VARCHAR(20),
+	Producer VARCHAR(20),
+	AgeLimit INT
+);
+CREATE TABLE Music
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Name VARCHAR(50),
+	Genre VARCHAR(10),
+	Artist VARCHAR(20),
+	Language VARCHAR(10)
+);
+GO
+CREATE TABLE DiscMusic
+(
+	idDisc INT,
+	idMusic INT,
+	CONSTRAINT FK_idMusic FOREIGN KEY(idMusic)
+	REFERENCES Music(ID),
+	CONSTRAINT FK_idDiscMusic FOREIGN KEY(idDisc)
+	REFERENCES Disc(ID)
+);
+CREATE TABLE DiscFilm
+(
+	idDisc INT,
+	idFilm INT,
+	CONSTRAINT FK_idFilm FOREIGN KEY(idFilm)
+	REFERENCES Film(ID),
+	CONSTRAINT FK_idDiscFilm FOREIGN KEY(idDisc)
+	REFERENCES Disc(ID)
+);
+GO
+CREATE TABLE OperationLog
+(
+	ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	idDisc INT,
+	idClient INT,
+	OperationType VARCHAR(10) NOT NULL,
+	OperationDateTimeStart DATETIME NOT NULL,
+	OperationDateTimeEnd DATETIME,
+	OperationPrice INT NOT NULL,
+	CONSTRAINT FK_idClient FOREIGN KEY(idClient)
+	REFERENCES Client(ID),
+	CONSTRAINT FK_idDiscOperationLog FOREIGN KEY(idDisc)
+	REFERENCES Disc(ID)
+);
